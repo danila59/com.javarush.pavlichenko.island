@@ -1,76 +1,30 @@
 package entity.animal.herbivoreAnimal;
 
+
+import entity.animal.plant.Grass;
 import services.init.ListTypeAnimals;
-import services.parameters.Direction;
-import services.parameters.Location;
 import services.parameters.Statistics;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 public class Rabbit extends Herbivore {
     public double weightAnimal = 2;
     public static ArrayList<Object> objects = new ArrayList<>();
 
-
-    public final int MAX_COUNT_ON_FIELD = 150;
-    public final int MOVE_SPEED = 2;
-    public final double KILOGRAMS_OF_FOOD = 0.45d;
-    public final int WEIGHT_ANIMAL = 2;
+    public int MAX_COUNT_ON_FIELD = 150;
+    public int MOVE_SPEED = 2;
+    public double KILOGRAMS_OF_FOOD = 0.45d;
+    public int WEIGHT_ANIMAL = 2;
 
 
     public double getWeightAnimal() {
         return weightAnimal;
     }
 
-    @Override
-    public void move(Object o, ArrayList<Object> objectArrayList, int x, int y, int locationSize) {
-        int moveSpeed = MOVE_SPEED;
-        Direction direction;
-        while (moveSpeed != 0) {
-            direction = Direction.values()[ThreadLocalRandom.current().nextInt(Direction.values().length)];
-            if (direction.name().equals("UP")) {
-                if (x - 1 >= 0) {
-                    x -= 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("DOWN")) {
-                if (x + 1 < Location.LOCATION_ISLAND.length) {
-                    x += 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("RIGHT")) {
-                if (y + 1 < locationSize) {
-                    y += 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("LEFT")) {
-                if (y - 1 >= 0 && y - 1 <= locationSize) {
-                    y -= 1;
-                    moveSpeed--;
-                }
-            }
-            if (moveSpeed == 0) {
-                ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[x][y];
-                if (arrayList == objectArrayList) {
-                    moveSpeed = MOVE_SPEED;
-                }
-            }
-        }
-
-        ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[x][y];
-        if (checkTypeAnimalOnLocation(arrayList)) {
-            arrayList.add(o);
-            objectArrayList.remove(o);
-        }
-    }
 
     @Override
     public boolean checkTypeAnimalOnLocation(ArrayList<Object> objectArrayList) {
@@ -88,20 +42,25 @@ public class Rabbit extends Herbivore {
     }
 
     @Override
+    public void move(Object animal, ArrayList<Object> objectArrayList, int x, int y, int locationSize, int moveSpeed) {
+        super.move(animal, objectArrayList, x, y, locationSize, MOVE_SPEED);
+    }
+
+    @Override
     public void eat(ArrayList<Object> objectArrayList) {
-        double field_value = 0;
+        double field_value;
         Field field;
         for (int k = 0; k < objectArrayList.size(); k++) {
             String simpleNameClass = objectArrayList.get(k).getClass().getSimpleName();
 
-            double weight = (getWeightAnimal() / WEIGHT_ANIMAL) * 100;
+            double weight = (weightAnimal / WEIGHT_ANIMAL) * 100;
             if (weight <= 40) {
                 objectArrayList.remove(k);
                 Statistics.the_number_animals_killed_starvation++;
                 return;
             }
 
-            if (getWeightAnimal() == WEIGHT_ANIMAL) {
+            if (weightAnimal == WEIGHT_ANIMAL) {
                 weightAnimal -= KILOGRAMS_OF_FOOD;
                 return;
             }
@@ -113,9 +72,9 @@ public class Rabbit extends Herbivore {
             }
 
             for (int i = 0; i < ListTypeAnimals.PLANT_ARRAY_LIST.size(); i++) {
-                String simpleNameClasHerbivore = ListTypeAnimals.PLANT_ARRAY_LIST.get(i).getClass().getSimpleName();
+                String simpleNameClasPlant = ListTypeAnimals.PLANT_ARRAY_LIST.get(i).getClass().getSimpleName();
                 Object object = ListTypeAnimals.PLANT_ARRAY_LIST.get(i);
-                if (simpleNameClass.equals(simpleNameClasHerbivore)) {
+                if (simpleNameClass.equals(simpleNameClasPlant)) {
                     try {
                         field = object.getClass().getField("weightPlant");
                     } catch (NoSuchFieldException e) {
@@ -145,9 +104,10 @@ public class Rabbit extends Herbivore {
         weightAnimal -= KILOGRAMS_OF_FOOD;
     }
 
-
     @Override
     public void multiply(ArrayList<Object> objectArrayList, int countListSize) {
+        int res = ThreadLocalRandom.current().nextInt(1, 100);
+        if (res <= 50) return;
         int weight = WEIGHT_ANIMAL / 2;
         if (getWeightAnimal() <= weight) return;
         int count = 0;
@@ -184,7 +144,7 @@ public class Rabbit extends Herbivore {
             Object o;
             int repeat = 0;
             while (true) {
-                for (int j = 0; j < countListSize; j++) { //ПРОБЛЕМА В ПОВТОРАХ
+                for (int j = 0; j < countListSize; j++) {
                     for (int i = 0; i < objects.size(); i++) {
                         o = objectArrayList.get(j);
                         Object o1 = objects.get(i);

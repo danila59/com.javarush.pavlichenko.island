@@ -24,13 +24,13 @@ public class Statistics {
 
     public static int number_Herbivores_Animals ;
 
-    public static int number_days ;
+    public static int number_days = 1 ;
 
 
     public void statisticIsland() {
         total_number_elements_on_island = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 total_number_elements_on_island += arrayList1.size();
             }
@@ -40,7 +40,7 @@ public class Statistics {
     public void numberAnimalsOnIsland() {
         only_the_number_animals = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
@@ -67,7 +67,7 @@ public class Statistics {
     public void numberPlantsOnIsland() {
         number_Plants_On_Island = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
@@ -90,12 +90,13 @@ public class Statistics {
         number_animals_eaten = 0;
         number_Herbivores_Animals = 0;
         number_predatory_animals = 0;
+        number_days++;
     }
 
     public void numberPredatoryAnimals() {
         number_predatory_animals = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
@@ -113,7 +114,7 @@ public class Statistics {
     public void numberHerbivoresAnimals() {
         number_Herbivores_Animals = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();

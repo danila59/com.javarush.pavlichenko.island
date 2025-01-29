@@ -24,50 +24,6 @@ public class Sheep extends Herbivore {
     }
 
 
-    @Override
-    public void move(Object o, ArrayList<Object> objectArrayList, int x, int y, int locationSize) {
-        int moveSpeed = MOVE_SPEED;
-        Direction direction;
-        while (moveSpeed != 0) {
-            direction = Direction.values()[ThreadLocalRandom.current().nextInt(Direction.values().length)];
-            if (direction.name().equals("UP")) {
-                if (x - 1 >= 0) {
-                    x -= 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("DOWN")) {
-                if (x + 1 < Location.LOCATION_ISLAND.length) {
-                    x += 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("RIGHT")) {
-                if (y + 1 < locationSize) {
-                    y += 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("LEFT")) {
-                if (y - 1 >= 0 && y - 1 <= locationSize) {
-                    y -= 1;
-                    moveSpeed--;
-                }
-            }
-            if (moveSpeed == 0) {
-                ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[x][y];
-                if (arrayList == objectArrayList) {
-                    moveSpeed = MOVE_SPEED;
-                }
-            }
-        }
-
-        ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[x][y];
-        if (checkTypeAnimalOnLocation(arrayList)) {
-            arrayList.add(o);
-            objectArrayList.remove(o);
-        }
-    }
 
     @Override
     public boolean checkTypeAnimalOnLocation(ArrayList<Object> objectArrayList) {
@@ -82,6 +38,11 @@ public class Sheep extends Herbivore {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void move(Object animal, ArrayList<Object> objectArrayList, int x, int y, int locationSize, int moveSpeed) {
+        super.move(animal, objectArrayList, x, y, locationSize, MOVE_SPEED);
     }
 
     @Override
@@ -144,6 +105,8 @@ public class Sheep extends Herbivore {
 
     @Override
     public void multiply(ArrayList<Object> objectArrayList, int countListSize) {
+        int res = ThreadLocalRandom.current().nextInt(1, 100);
+        if (res <= 50) return;
         int count = 0;
         int check = 0;
         int weight = WEIGHT_ANIMAL / 2 ;

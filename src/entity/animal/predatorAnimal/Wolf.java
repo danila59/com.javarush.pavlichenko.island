@@ -2,24 +2,19 @@ package entity.animal.predatorAnimal;
 
 import entity.animal.herbivoreAnimal.*;
 import services.init.ListTypeAnimals;
-
-import services.parameters.Direction;
-import services.parameters.Location;
 import services.parameters.Statistics;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 public class Wolf extends Predator {
     public double weightWolf = 50;
     public static ArrayList<Object> objects = new ArrayList<>();
 
-    public final int MAX_COUNT_ON_FIELD = 30;
-    public final int MOVE_SPEED = 3;
+    public static final int MAX_COUNT_ON_FIELD = 30;
+    public static final int MOVE_SPEED = 3;
     public final double KILOGRAMS_OF_FOOD = 8;
     public final int WEIGHT_WOLF_FINAL = 50;
 
@@ -37,51 +32,11 @@ public class Wolf extends Predator {
         return weightWolf;
     }
 
+
     @Override
-    public void move(Object o, ArrayList<Object> objectArrayList, int x, int y, int locationSize) {
-        int moveSpeed = MOVE_SPEED;
-        Direction direction;
-        while (moveSpeed != 0) {
-
-            direction = Direction.values()[ThreadLocalRandom.current().nextInt(Direction.values().length)];
-            if (direction.name().equals("UP")) {
-                if (x - 1 >= 0) {
-                    x -= 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("DOWN")) {
-                if (x + 1 < Location.LOCATION_ISLAND.length) {
-                    x += 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("RIGHT")) {
-                if (y + 1 < locationSize) {
-                    y += 1;
-                    moveSpeed--;
-                }
-            }
-            if (direction.name().equals("LEFT")) {
-                if (y - 1 >= 0 && y - 1 <= locationSize) {
-                    y -= 1;
-                    moveSpeed--;
-                }
-            }
-            if (moveSpeed == 0) {
-                ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[x][y];
-                if (arrayList == objectArrayList) {
-                    moveSpeed = MOVE_SPEED;
-                }
-            }
-        }
-        ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[x][y];
-        if (checkTypeAnimalOnLocation(arrayList)) {
-            arrayList.add(o);
-            objectArrayList.remove(o);
-        }
+    public void move(Object animal, ArrayList<Object> objectArrayList, int x, int y, int locationSize, int moveSpeed) {
+        super.move(animal, objectArrayList, x, y, locationSize, MOVE_SPEED);
     }
-
 
     @Override
     public boolean checkTypeAnimalOnLocation(ArrayList<Object> objectArrayList) {
@@ -113,7 +68,7 @@ public class Wolf extends Predator {
             }
 
             if (getWeightWolf() == WEIGHT_WOLF_FINAL) {
-                weightWolf -= KILOGRAMS_OF_FOOD;
+                weightWolf -= this.KILOGRAMS_OF_FOOD;
                 return;
             }
 
@@ -144,13 +99,13 @@ public class Wolf extends Predator {
                             return;
                         }
                         weightWolf += field_value;
-                        if (field_value < KILOGRAMS_OF_FOOD) {
-                            weightWolf -= KILOGRAMS_OF_FOOD - field_value;
+                        if (field_value < this.KILOGRAMS_OF_FOOD) {
+                            weightWolf -= this.KILOGRAMS_OF_FOOD - field_value;
                             return;
                         }
                         return;
                     } else {
-                        weightWolf -= KILOGRAMS_OF_FOOD;
+                        weightWolf -= this.KILOGRAMS_OF_FOOD;
                         return;
                     }
                 }

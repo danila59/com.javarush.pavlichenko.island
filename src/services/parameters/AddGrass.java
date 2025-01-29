@@ -19,7 +19,7 @@ public class AddGrass implements Runnable{
                 ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 PlantType plantType = PlantType.values()[ThreadLocalRandom.current().nextInt(PlantType.values().length)];
                 Object plantType1 = fabricPlants.createPlant(plantType);
-                int field = 0;
+                int field;
                 try {
                     field = initializationIsland.findingMaxCountOnField(plantType1);
                 } catch (NoSuchFieldException e) {
@@ -31,7 +31,7 @@ public class AddGrass implements Runnable{
                     break;
                 }
                 int res = ThreadLocalRandom.current().nextInt(1, 100);
-                if (res >= 50) {
+                if (res >= 30) {
                     for (int k = 0; k < result; k++) {
                         arrayList.add(fabricPlants.createPlant(plantType));
                     }

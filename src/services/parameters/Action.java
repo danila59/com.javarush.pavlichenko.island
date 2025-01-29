@@ -1,5 +1,6 @@
 package services.parameters;
 
+import entity.animal.Animal;
 import entity.animal.herbivoreAnimal.*;
 import entity.animal.predatorAnimal.*;
 import services.visual.Visual;
@@ -15,11 +16,9 @@ public class Action implements Runnable {
     public static Queue<Action> threadSafeQueue = new ConcurrentLinkedQueue<>();
 
 
-
-
-    public  void manipulationEat() {
+    public void manipulationEat() {
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length -1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 ArrayList<Object> arrayListDuplicate = new ArrayList<>(arrayList1);
                 ArrayList<Object> arrayListRepeat = new ArrayList<>();
@@ -48,48 +47,8 @@ public class Action implements Runnable {
                         o = arrayList1.get(k);
                         arrayListRepeat.add(o);
                     }
-
-                    if (o instanceof Wolf) {
-                        ((Wolf) o).eat(arrayList1);
-                    }
-                    if (o instanceof Bear) {
-                        ((Bear) o).eat(arrayList1);
-                    }
-                    if (o instanceof Fox) {
-                        ((Fox) o).eat(arrayList1);
-                    }
-                    if (o instanceof Snake) {
-                        ((Snake) o).eat(arrayList1);
-                    }
-                    if (o instanceof Eagle) {
-                        ((Eagle) o).eat(arrayList1);
-                    }
-                    if (o instanceof Deer) {
-                        ((Deer) o).eat(arrayList1);
-                    }
-                    if (o instanceof Buffalo) {
-                        ((Buffalo) o).eat(arrayList1);
-                    }
-                    if (o instanceof Duck) {
-                        ((Duck) o).eat(arrayList1);
-                    }
-                    if (o instanceof Goat) {
-                        ((Goat) o).eat(arrayList1);
-                    }
-                    if (o instanceof Hog) {
-                        ((Hog) o).eat(arrayList1);
-                    }
-                    if (o instanceof Rabbit) {
-                        ((Rabbit) o).eat(arrayList1);
-                    }
-                    if (o instanceof Mouse) {
-                        ((Mouse) o).eat(arrayList1);
-                    }
-                    if (o instanceof Sheep) {
-                        ((Sheep) o).eat(arrayList1);
-                    }
-                    if (o instanceof Horse) {
-                        ((Horse) o).eat(arrayList1);
+                    if (o instanceof Animal) {
+                        ((Animal) o).eat(arrayList1);
                     }
                 }
             }
@@ -133,55 +92,13 @@ public class Action implements Runnable {
 
     public void manipulationMultiply() {
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 int countListSize = arrayList.size();
                 for (int k = 0; k < countListSize; k++) {
                     Object o = arrayList.get(k);
-                    if (o instanceof Wolf) {
-                        ((Wolf) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Bear) {
-                        ((Bear) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Fox) {
-                        ((Fox) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Snake) {
-                        ((Snake) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Eagle) {
-                        ((Eagle) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Deer) {
-                        ((Deer) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Buffalo) {
-                        ((Buffalo) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Caterpillar) {
-                        ((Caterpillar) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Duck) {
-                        ((Duck) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Goat) {
-                        ((Goat) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Hog) {
-                        ((Hog) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Rabbit) {
-                        ((Rabbit) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Mouse) {
-                        ((Mouse) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Sheep) {
-                        ((Sheep) o).multiply(arrayList, countListSize);
-                    }
-                    if (o instanceof Horse) {
-                        ((Horse) o).multiply(arrayList, countListSize);
+                    if (o instanceof Animal) {
+                        ((Animal) o).multiply(arrayList, countListSize);
                     }
                 }
             }
@@ -189,9 +106,8 @@ public class Action implements Runnable {
     }
 
     public void manipulationMove() {
-
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[i].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[i].length-1; j++) {
                 ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 int countListSize = arrayList.size();
                 for (int k = 0; k < arrayList.size(); k++) {
@@ -200,47 +116,8 @@ public class Action implements Runnable {
                         countListSize--;
                     }
                     Object o = arrayList.get(k);
-                    if (o instanceof Wolf) {
-                        ((Wolf) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Bear) {
-                        ((Bear) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Fox) {
-                        ((Fox) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Snake) {
-                        ((Snake) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Eagle) {
-                        ((Eagle) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Deer) {
-                        ((Deer) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Buffalo) {
-                        ((Buffalo) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Duck) {
-                        ((Duck) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Goat) {
-                        ((Goat) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Hog) {
-                        ((Hog) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Rabbit) {
-                        ((Rabbit) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Mouse) {
-                        ((Mouse) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Sheep) {
-                        ((Sheep) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
-                    }
-                    if (o instanceof Horse) {
-                        ((Horse) o).move(o, arrayList, i, j, Location.LOCATION_ISLAND[i].length);
+                    if (o instanceof Animal) {
+                        ((Animal) o).move(o,arrayList, i, j, Location.LOCATION_ISLAND[i].length,  0);
                     }
                 }
             }
@@ -248,15 +125,15 @@ public class Action implements Runnable {
     }
 
     @Override
-    public  void run() {
+    public void run() {
         synchronized (Action.class) {
-            manipulationEat();
-//        System.out.println("День № " + Statistics.number_days ++);
             System.out.println(Thread.currentThread().getName());
+            System.out.println("День №" + Statistics.number_days);
+            manipulationEat();
             manipulationMultiply();
             manipulationMove();
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-            executorService.scheduleAtFixedRate(new AddGrass(), 0, 5, TimeUnit.SECONDS);
+            executorService.scheduleAtFixedRate(new AddGrass(), 0, 1, TimeUnit.SECONDS);
             try {
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {

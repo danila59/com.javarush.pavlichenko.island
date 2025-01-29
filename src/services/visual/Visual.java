@@ -56,7 +56,7 @@ public class Visual {
 
     public void takeList() {
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
+            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
                 ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     Object animal = arrayList1.get(i1);
@@ -150,7 +150,7 @@ public class Visual {
     public void printArray() {
         for (int i = 0; i < strings.length; i++) {
             System.out.print("[");
-            for (int i1 = 0; i1 < strings[i1].length; i1++) {
+            for (int i1 = 0; i1 < strings[i1].length-1; i1++) {
                 if(strings[i] == null || strings[i1] == null)continue;
                 System.out.print(" |" + strings[i][i1] + "| ");
             }

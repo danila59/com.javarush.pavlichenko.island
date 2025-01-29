@@ -52,12 +52,10 @@ public class InitializationIsland {
         Object plantType1 = fabricPlants.createPlant(plantType);
         int field = findingMaxCountOnField(plantType1);
         int result = new Random().nextInt(1, field);
-        int res = new Random().nextInt(1, 100);
-        if (res >= 50) {
             for (int i = 0; i < result; i++) {
                 arrayList.add(fabricPlants.createPlant(plantType));
             }
-        }
+
         shuffleList(arrayList);
         return arrayList;
     }
