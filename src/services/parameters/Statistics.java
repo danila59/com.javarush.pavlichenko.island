@@ -1,5 +1,6 @@
 package services.parameters;
 
+import entity.animal.Animal;
 import services.init.ListTypeAnimals;
 
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class Statistics {
     public void statisticIsland() {
         total_number_elements_on_island = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
-                ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+            for (int j = 0; j <= Location.LOCATION_ISLAND[j].length-1; j++) {
+                ArrayList<Animal> arrayList1 =  Location.LOCATION_ISLAND[i][j];
                 total_number_elements_on_island += arrayList1.size();
             }
         }
@@ -40,8 +41,8 @@ public class Statistics {
     public void numberAnimalsOnIsland() {
         only_the_number_animals = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
-                ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+            for (int j = 0; j <= Location.LOCATION_ISLAND[j].length-1; j++) {
+                ArrayList<Animal> arrayList1 =  Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
                     for (int i2 = 0; i2 < ListTypeAnimals.HERBIVORE_ARRAY_LIST.size(); i2++) {
@@ -67,8 +68,8 @@ public class Statistics {
     public void numberPlantsOnIsland() {
         number_Plants_On_Island = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
-                ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+            for (int j = 0; j <= Location.LOCATION_ISLAND[j].length-1; j++) {
+                ArrayList<Animal> arrayList1 =  Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
                     for (int i2 = 0; i2 < ListTypeAnimals.PLANT_ARRAY_LIST.size(); i2++) {
@@ -96,8 +97,8 @@ public class Statistics {
     public void numberPredatoryAnimals() {
         number_predatory_animals = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
-                ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+            for (int j = 0; j <= Location.LOCATION_ISLAND[j].length-1; j++) {
+                ArrayList<Animal> arrayList1 =  Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
                     for (int i2 = 0; i2 < ListTypeAnimals.PREDATOR_ARRAY_LIST.size(); i2++) {
@@ -114,8 +115,8 @@ public class Statistics {
     public void numberHerbivoresAnimals() {
         number_Herbivores_Animals = 0;
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
-                ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+            for (int j = 0; j <= Location.LOCATION_ISLAND[j].length-1; j++) {
+                ArrayList<Animal> arrayList1 =  Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     String nameClass = arrayList1.get(i1).getClass().getSimpleName();
                     for (int i2 = 0; i2 < ListTypeAnimals.HERBIVORE_ARRAY_LIST.size(); i2++) {

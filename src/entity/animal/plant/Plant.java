@@ -1,8 +1,12 @@
 package entity.animal.plant;
 
-public abstract class Plant {
+import entity.animal.Animal;
 
+public abstract class Plant extends Animal {
 
+   public double weightPlant;
 
-
+    public double getWeightPlant() {
+        return weightPlant;
+    }
 }

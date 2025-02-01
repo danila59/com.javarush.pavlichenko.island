@@ -1,5 +1,7 @@
 package entity.animal.plant;
 
+import entity.animal.Animal;
+
 public class FabricPlants {
 
 

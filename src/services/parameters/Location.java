@@ -1,13 +1,13 @@
 package services.parameters;
 
- public class Location {
+import entity.animal.Animal;
+import java.util.ArrayList;
 
-     public static final int columnsCount = 100;
-     public static final int rowsCount = 20;
+public class Location extends Animal{
+        public static final int columnsCount = 100;
+        public static final int rowsCount = 20;
 
-    public  static final Object[][] LOCATION_ISLAND = new Object[Settings.columnsCount][Settings.rowsCount];
+        public static final ArrayList<Animal>[][] LOCATION_ISLAND = new ArrayList[Settings.columnsCount][Settings.rowsCount];
 
-}
-
-
+    }
 

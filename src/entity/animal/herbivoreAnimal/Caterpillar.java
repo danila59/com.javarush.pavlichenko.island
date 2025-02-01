@@ -1,38 +1,39 @@
 package entity.animal.herbivoreAnimal;
 
-import services.init.ListTypeAnimals;
-import services.parameters.Statistics;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 public class Caterpillar extends Herbivore {
 
     public double weightAnimal = 0.01;
-    public static ArrayList<Object> objects = new ArrayList<>();
+
 
     public final int MAX_COUNT_ON_FIELD = 1000;
     public final double WEIGHT_ANIMAL = 0.01;
 
-
-    public double getWeightAnimal() {
-        return weightAnimal;
+    @Override
+    public int getMaxCountOnField() {
+        return MAX_COUNT_ON_FIELD;
     }
 
     @Override
-    public boolean checkTypeAnimalOnLocation(ArrayList<Object> objectArrayList) {
-        int count = 0;
-        for (int i = 0; i < objectArrayList.size(); i++) {
-            Object object = objectArrayList.get(i);
-            if (object instanceof Caterpillar) {
-                count++;
-            }
-        }
-        if (count >= MAX_COUNT_ON_FIELD) {
-            return false;
-        }
-        return true;
+    public void setWeightAnimal(double weightAnimal) {
+        this.weightAnimal = weightAnimal;
     }
+
+
+//    @Override
+//    public boolean checkTypeAnimalOnLocation(ArrayList<Animal> objectArrayList) {
+//        int count = 0;
+//        for (int i = 0; i < objectArrayList.size(); i++) {
+//            Object object = objectArrayList.get(i);
+//            if (object instanceof Caterpillar) {
+//                count++;
+//            }
+//        }
+//        if (count >= MAX_COUNT_ON_FIELD) {
+//            return false;
+//        }
+//        return true;
+//    }
 
 //    @Override
 //    public void eat(ArrayList<Object> objectArrayList) {

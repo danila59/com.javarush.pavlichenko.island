@@ -1,5 +1,6 @@
 package services.visual;
 
+import entity.animal.Animal;
 import entity.animal.herbivoreAnimal.*;
 import entity.animal.predatorAnimal.*;
 import services.parameters.Location;
@@ -56,8 +57,8 @@ public class Visual {
 
     public void takeList() {
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
-            for (int j = 0; j < Location.LOCATION_ISLAND[j].length-1; j++) {
-                ArrayList<Object> arrayList1 = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+            for (int j = 0; j <= Location.LOCATION_ISLAND[j].length-1; j++) {
+                ArrayList<Animal> arrayList1 =  Location.LOCATION_ISLAND[i][j];
                 for (int i1 = 0; i1 < arrayList1.size(); i1++) {
                     Object animal = arrayList1.get(i1);
                     recognizeTypeAnimal(animal);
@@ -71,6 +72,7 @@ public class Visual {
     }
 
     public void recognizeTypeAnimal(Object o) {
+
         if (o instanceof Fox) {
             numbers_fox++;
         } else if (o instanceof Wolf) {
@@ -150,7 +152,7 @@ public class Visual {
     public void printArray() {
         for (int i = 0; i < strings.length; i++) {
             System.out.print("[");
-            for (int i1 = 0; i1 < strings[i1].length-1; i1++) {
+            for (int i1 = 0; i1 <= strings[i1].length-1; i1++) {
                 if(strings[i] == null || strings[i1] == null)continue;
                 System.out.print(" |" + strings[i][i1] + "| ");
             }

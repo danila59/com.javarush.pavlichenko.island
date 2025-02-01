@@ -1,5 +1,6 @@
 package services.parameters;
 
+import entity.animal.Animal;
 import entity.animal.plant.FabricPlants;
 import entity.animal.plant.Grass;
 import entity.animal.plant.PlantType;
@@ -8,7 +9,7 @@ import services.init.InitializationIsland;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class AddGrass implements Runnable{
+public class AddGrass implements Runnable {
     FabricPlants fabricPlants = new FabricPlants();
     InitializationIsland initializationIsland = new InitializationIsland();
 
@@ -16,15 +17,11 @@ public class AddGrass implements Runnable{
     public void addGrassOnLocations() {
         for (int i = 0; i < Location.LOCATION_ISLAND.length; i++) {
             for (int j = 0; j < Location.LOCATION_ISLAND[j].length; j++) {
-                ArrayList<Object> arrayList = (ArrayList<Object>) Location.LOCATION_ISLAND[i][j];
+                ArrayList<Animal> arrayList = Location.LOCATION_ISLAND[i][j];
                 PlantType plantType = PlantType.values()[ThreadLocalRandom.current().nextInt(PlantType.values().length)];
-                Object plantType1 = fabricPlants.createPlant(plantType);
-                int field;
-                try {
-                    field = initializationIsland.findingMaxCountOnField(plantType1);
-                } catch (NoSuchFieldException e) {
-                    throw new RuntimeException(e);
-                }
+               Animal plantType1 = fabricPlants.createPlant(plantType);
+                int field = plantType1.getMaxCountOnField();
+
                 int result = ThreadLocalRandom.current().nextInt(1, field);
                 int plantOnLocation = checkPlantsOnLocation(arrayList);
                 if (result + plantOnLocation >= field) {
@@ -40,9 +37,9 @@ public class AddGrass implements Runnable{
         }
     }
 
-    public int checkPlantsOnLocation(ArrayList<Object> arrayList) {
+    public int checkPlantsOnLocation(ArrayList<Animal> arrayList) {
         int count = 0;
-        for (Object object : arrayList) {
+        for (Animal object : arrayList) {
             if (object instanceof Grass) {
                 count++;
             }
@@ -52,6 +49,6 @@ public class AddGrass implements Runnable{
 
     @Override
     public void run() {
-addGrassOnLocations();
+        addGrassOnLocations();
     }
 }

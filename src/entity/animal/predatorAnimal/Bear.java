@@ -1,24 +1,19 @@
 package entity.animal.predatorAnimal;
 
+import entity.animal.Animal;
 import entity.animal.herbivoreAnimal.*;
-import services.init.ListTypeAnimals;
-import services.parameters.Direction;
-import services.parameters.Location;
 import services.parameters.Statistics;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Bear extends Predator {
-    public double weightBear = 500;
-    public static ArrayList<Object> objects = new ArrayList<>();
+    public double weightAnimal = 500;
 
     public final int MAX_COUNT_ON_FIELD = 5;
     public final int MOVE_SPEED = 2;
     public final double KILOGRAMS_OF_FOOD = 80;
-    public final int WEIGHT_BEAR_FINAL = 500;
+    public final int WEIGHT_ANIMAL = 500;
 
     public final int CHANCE_EAT_RABBIT = 80;
     public final int CHANCE_EAT_HORSE = 40;
@@ -32,118 +27,80 @@ public class Bear extends Predator {
     public final int CHANCE_EAT_SNAKE = 80;
 
 
-    public double getWeightBear() {
-        return weightBear;
+    @Override
+    public double getKilogramsOfFood() {
+        return KILOGRAMS_OF_FOOD;
     }
 
     @Override
-    public void move(Object animal, ArrayList<Object> objectArrayList, int x, int y, int locationSize, int moveSpeed) {
-        super.move(animal, objectArrayList, x, y, locationSize, MOVE_SPEED);
+    public int getMaxCountOnField() {
+        return MAX_COUNT_ON_FIELD;
     }
 
     @Override
-    public boolean checkTypeAnimalOnLocation(ArrayList<Object> objectArrayList) {
-        int count = 0;
-        for (int i = 0; i < objectArrayList.size(); i++) {
-            Object object = objectArrayList.get(i);
-            if (object instanceof Bear) {
-                count++;
-            }
+    public int getMoveSpeed() {
+        return MOVE_SPEED;
+    }
+
+    @Override
+    public double getWeight_animalFinal() {
+        return WEIGHT_ANIMAL;
+    }
+
+    @Override
+    public double getWeightAnimal() {
+        return weightAnimal;
+    }
+
+    @Override
+    public void setWeightAnimal(double weightAnimal) {
+        this.weightAnimal = weightAnimal;
+    }
+
+    @Override
+    public void eat(ArrayList<Animal> animalArrayList, Animal animal) {//snake
+        double weightAnimal = animal.getWeightAnimal();
+        double weight = (animal.getWeightAnimal() / animal.getWeight_animalFinal()) * 100;
+        if (weight <= 40) {
+            animalArrayList.remove(animal);
+            Statistics.the_number_animals_killed_starvation++;
+            return;
         }
-        if (count >= MAX_COUNT_ON_FIELD) {
-            return false;
+        if (animal.getWeightAnimal() == animal.getWeight_animalFinal()) {
+            weightAnimal -= animal.getKilogramsOfFood();
+            animal.setWeightAnimal(weightAnimal);
+            return;
         }
-        return true;
-    }
-
-    @Override
-    public void eat(ArrayList<Object> objectArrayList) {
-        double field_value;
-        Field field;
-        for (int k = 0; k < objectArrayList.size(); k++) {
-            String simpleNameClass = objectArrayList.get(k).getClass().getSimpleName();
-            Object object1 = objectArrayList.get(k);
-
-            double weight = (getWeightBear() /WEIGHT_BEAR_FINAL ) * 100;
-            if(weight <= 40){
-                objectArrayList.remove(k);
-                Statistics.the_number_animals_killed_starvation++;
-                return;
-            }
-            if (getWeightBear() == WEIGHT_BEAR_FINAL) {
-                weightBear -= KILOGRAMS_OF_FOOD;
-                return;
-            }
-            if (getWeightBear() <= 0) {
-                objectArrayList.remove(k);
-                Statistics.the_number_animals_killed_starvation++;
-                return;
-            }
-            for (int i = 0; i < ListTypeAnimals.HERBIVORE_ARRAY_LIST.size(); i++) {
-                String simpleNameClasHerbivore = ListTypeAnimals.HERBIVORE_ARRAY_LIST.get(i).getClass().getSimpleName();
-                Object object = ListTypeAnimals.HERBIVORE_ARRAY_LIST.get(i);
-                if (simpleNameClass.equals("Snake")){
-                    try {
-                        field = object1.getClass().getField("weightSnake");
-                    } catch (NoSuchFieldException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        field_value = (double) field.get(object1);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                    if (checkTypeAnimal(object)) {
-                        objectArrayList.remove(k);
-                        Statistics.number_animals_eaten++;
-                        if (weightBear + field_value > WEIGHT_BEAR_FINAL) {
-                            weightBear = WEIGHT_BEAR_FINAL;
-                            return;
-                        }
-                        weightBear += field_value;
-                        if (field_value < KILOGRAMS_OF_FOOD) {
-                            weightBear -= KILOGRAMS_OF_FOOD - field_value;
-                            return;
-                        }
-                        return;
-                    } else {
-                        weightBear -= KILOGRAMS_OF_FOOD;
+        if (animal.getWeightAnimal() <= 0) {
+            animalArrayList.remove(animal);
+            Statistics.the_number_animals_killed_starvation++;
+            return;
+        }
+        for (int k = 0; k < animalArrayList.size(); k++) {
+            Animal animal1 = animalArrayList.get(k);
+            if (animal1 instanceof Herbivore || animal1 instanceof Snake) {
+                double weightHerbivoreAnimal = animal1.getWeightAnimal();
+                if (checkTypeAnimal(animal1)) {
+                    animalArrayList.remove(k);
+                    Statistics.number_animals_eaten++;
+                    if (weightAnimal + weightHerbivoreAnimal > animal.getWeight_animalFinal()) {
+                        animal.setWeightAnimal(animal.getWeight_animalFinal());
                         return;
                     }
-                }
-                if (simpleNameClass.equals(simpleNameClasHerbivore)) {
-                    try {
-                        field = object.getClass().getField("weightAnimal");
-                    } catch (NoSuchFieldException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        field_value = (double) field.get(object);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                    if (checkTypeAnimal(object)) {
-                        objectArrayList.remove(k);
-                        Statistics.number_animals_eaten++;
-                        if (weightBear + field_value > WEIGHT_BEAR_FINAL) {
-                            weightBear = WEIGHT_BEAR_FINAL;
-                            return;
-                        }
-                        weightBear += field_value;
-                        if (field_value < KILOGRAMS_OF_FOOD) {
-                            weightBear -= KILOGRAMS_OF_FOOD - field_value;
-                            return;
-                        }
-                        return;
-                    } else {
-                        weightBear -= KILOGRAMS_OF_FOOD;
+                    animal.setWeightAnimal(weightAnimal += weightHerbivoreAnimal);
+                    if (weightHerbivoreAnimal < animal.getKilogramsOfFood()) {
+                        weightAnimal -= animal.getKilogramsOfFood() - weightHerbivoreAnimal;
+                        animal.setWeightAnimal(weightAnimal);
                         return;
                     }
+                    return;
                 }
             }
         }
-        weightBear -= KILOGRAMS_OF_FOOD;
+        weightAnimal -= animal.getKilogramsOfFood();
+        animal.setWeightAnimal(weightAnimal);
     }
+
 
     @Override
     public boolean checkTypeAnimal(Object o) {
@@ -165,7 +122,7 @@ public class Bear extends Predator {
             return checkAbleToEat(CHANCE_EAT_BUFFALO);
         } else if (o instanceof Duck) {
             return checkAbleToEat(CHANCE_EAT_DUCK);
-        }else if (o instanceof Snake) {
+        } else if (o instanceof Snake) {
             return checkAbleToEat(CHANCE_EAT_SNAKE);
         }
         return false;
@@ -178,98 +135,6 @@ public class Bear extends Predator {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void multiply(ArrayList<Object> objectArrayList, int countListSize) {
-        int count = 0;
-        int check = 0;
-        int weight = WEIGHT_BEAR_FINAL / 2 ;
-        if(getWeightBear() <= weight)return;
-        if (!objects.isEmpty()) {
-            for (int i = 0; i < objects.size(); i++) {
-                for (int i1 = 0; i1 < objectArrayList.size(); i1++) {
-                    Object o = objects.get(i);
-                    Object o1 = objectArrayList.get(i1);
-                    if (o == o1) {
-                        check++;
-                    }
-                }
-            }
-            if (check == 0) {
-                objects.removeAll(Collections.unmodifiableList(objects));
-            }
-        }
-
-        for (int i = 0; i < countListSize; i++) {
-            Object o = objectArrayList.get(i);
-            if (o instanceof Bear) {
-                count++;
-            }
-        }
-        int result = count / 2;
-
-        if (check == objects.size() && !objects.isEmpty() && result % 2 != 0) {
-            return;
-        }
-        if (check == count) return;
-
-        if (!objects.isEmpty()) {
-            Object o = null;
-            int repeat = 0;
-            while (true) {
-                for (int j = 0; j < countListSize; j++) {
-                    for (int i = 0; i < objects.size(); i++) {
-                        o = objectArrayList.get(j);
-                        Object o1 = objects.get(i);
-                        if (o == o1) {
-                            repeat++;
-                            break;
-                        }
-                        if (repeat == objects.size()) {
-                            if (o instanceof Bear) {
-                                while (true) {
-                                    if (j + 1 >= objectArrayList.size()) {
-                                        return;
-                                    }
-                                    Object o2 = objectArrayList.get(j + 1);
-                                    j++;
-                                    if (o2 instanceof Bear) {
-                                        if (!checkTypeAnimalOnLocation(objectArrayList)) return;
-                                        objectArrayList.add(new Bear());
-                                        Statistics.number_of_animals_born++;
-                                        objects.add(o);
-                                        objects.add(o2);
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            for (int j = 0; j < countListSize; j++) {
-                Object o = objectArrayList.get(j);
-                if (o instanceof Bear) {
-                    while (true) {
-                        if (j + 1 >= objectArrayList.size()) {
-                            return;
-                        }
-                        Object o2 = objectArrayList.get(j + 1);
-                        if (o2 instanceof Bear) {
-                            if (!checkTypeAnimalOnLocation(objectArrayList)) return;
-                            objectArrayList.add(new Bear());
-                            Statistics.number_of_animals_born++;
-                            objects.add(o);
-                            objects.add(o2);
-                            return;
-                        }
-                        j++;
-                    }
-                }
-            }
-        }
     }
 }
 
